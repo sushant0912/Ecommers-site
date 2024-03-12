@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title%}Myntra|Home{% endblock %}
+{% block body %}
+
+<div class="container mt-5">
+<div class="row">
+    {% if query %}
+    <center><h5>Search result for:<strong>{{query}}</strong></h5></center>
+    <center><h2>{{errmsg}}</h2></center>
+    {% endif %}
+    
+    <!-- start of serching sidbar -->
+    <div class="col-md-3 mt-3">
+        <h5>Filter by Category</h5>
+        <p><a href="{% url 'glasslist' %}">By glass</a></p>
+        <p><a href="{% url 'clothlist' %}">By Cloths</a></p>
+        <p><a href="{% url 'shoeslist' %}">By Shoes</a></p>
+        <p><a href="{% url 'electronicslist' %}">By Electronics</a></p>
+        <hr>
+        <h5>Filter By Price</h5>
+        <form method="post" action="{% url 'pricerangeview' %}">
+            {% csrf_token %} 
+            <div>
+                <label class="form-label"><strong>Min:</strong></label>
+                <input type="number" class="form-control" name="min">
+            </div>
+            <div>
+                <label class="form-label"><strong>Max:</strong></label>
+                <input type="number" class="form-control" name="max">
+             </div>
+             <div>
+                <input type="submit" class="btn btn-danger" value="Filter">
+            </div>
+        </form>
+        <hr>
+        <h5>Sort by price</h5>
+        <p><a href="{% url 'allsortedproducts' %}?sort=high_to_low">High to low</a></p>
+        <p><a href="{% url 'allsortedproducts' %}?sort=low_to_high">Low to High</a></p>
+    </div>
+<!-- end of search sidebar -->
+
+<!-- start of cart -->
+<div class="col-md-9 mt-3">
+    <div class="row">
+        {% for x in allproducts %}
+        <div class="col-md-4 mt-2">
+    <div class="card" style="width: 17rem;">
+        <img src="{{x.photos.url}}" class="card-img-top" alt="..." width="100px" height="150px">
+        <div class="card-body">
+          <h5 class="card-title">{{x.productname}}</h5>
+          <p class="card-text">{{x.desc}}</p>
+          <p class="card-text">Rs. {{x.price}}</p>
+          <a href="/addtocart/{{x.productid}}" class="btn btn-primary">ADD to cart</a>
+          <a href="{% url 'payment' %}" class="btn btn-primary">BUY Now</a>   
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}

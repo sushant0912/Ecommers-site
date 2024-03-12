@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title%}Myntra|Carts{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <!-- carts start here-->
+        <div class="col-md-9">
+            <div class="row">
+                {% for x in allcarts %}
+                <div class="col-md-4 mt-2">
+                
+                <div class="card" style="width: 17rem;">
+                <img src="{{x.productid.photos.url}}" class="card-img-top" alt="..." width="100px" height="200px">
+                <div class="card-body">
+                  <h5 class="card-title">{{x.productid.productname}}</h5>
+                  <p class="card-text">{{x.productid.category}}</p>
+                  <p class="card-text">{{x.productid.desc}}</p>
+                  <p class="card-text">Rs.{{x.productid.price}}</p>
+                  <p>
+                    <strong>QTY:</strong>
+                    <a href="/updateqty/0/{{x.productid.productid}}"><button class="btn btn-danger">-</button></a>
+                    <input style="width: 100px" type="number" value="{{x.qty}}">
+                    <a href="/updateqty/1/{{x.productid.productid}}"><button class="btn btn-success">+</button></a>
+                  </p>
+                  <!-- <a href="{% url 'payment' %}" class="btn btn-primary">Buy Now</a> -->
+                  <a href="/removefromcart/{{x.productid.productid}}" class="btn btn-primary">Remove</a>
+                </div>
+              </div>
+            
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        
+        <!-- carts end here-->
+
+        <!-- right side section start here-->
+        <div class="col-md-3">
+          <h5 class="bg-danger text-white">Total Amount section</h5>
+          <p><strong>Total Items:</strong>{{totalitems}}</p>
+          <hr>
+          <p><strong>Total Amount:</strong>Rs.{{totalamount}}</p>
+          <a href="{% url 'payment' %}"><button class="btn btn-danger">place Order</button></a>
+
+        </div>
+        <!-- right side section end here-->
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title%}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <!-- start of header section-->
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="{% url 'index' %}">Myntra</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Category
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'glasslist' %}">glass</a></li>
+                          <li><a class="dropdown-item" href="{% url 'clothlist' %}">Cloths</a></li>
+                          <li><a class="dropdown-item" href="{% url 'shoeslist' %}">Shoes</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="{% url 'electronicslist' %}">Electronics</a></li>
+                        </ul>
+                      </li>
+                      {% if user.is_authenticated %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'userlogout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'showorders' %}">My Orders</a>
+                      </li>
+                      {% else %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">SignIn</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">SignUp</a>
+                      </li>
+                      {% endif %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                      </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                    <strong>Welcome {{user}}</strong>&nbsp;&nbsp;
+                    {% else %}
+                    <strong>Welcome Guest</strong>&nbsp;&nbsp;
+                    {% endif %}
+                    <form class="d-flex" role="search"method="get" action="{% url 'serchproducts' %}">
+                      <input class="form-control me-2" name="q" value="{{query}}" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success" type="submit">Search</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="/showcart"><i class="bi bi-cart3 "></i></a>
+                    </form>
+                  </div>
+                </div>
+              </nav>
+        </div>
+    </div>
+    <!-- end of header section-->
+    {% block body %}
+
+    {% endblock %}
+    <!-- start of footer section-->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Address</h5>
+                <hr>
+                1st Floor,Bhandar Bhavan,<br>
+                Swami Vivekanand Rd,<br>
+                Near Police Station<br>
+                Pincode-400092
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <hr>
+                <a href="{% url 'index' %}">Home</a><br>
+                <a href="{% url 'signin' %}">SignIn</a><br>
+                <a href="{% url 'signup' %}">SignUp</a><br>
+            </div>
+            <div class="col-md-4">
+                <h5>Connect Us</h5>
+                <hr>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-twitter"></i></a>
+            </div>
+
+        </div>
+    </div>
+    <!-- end of footer section-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
